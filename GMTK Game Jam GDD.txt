@@ -1,0 +1,178 @@
+# 🎮 Game Design Document
+
+## **Freeloop: The Gig Never Ends**
+
+*A 2D freelance life sim where the grind never stops.*
+
+---
+
+## 📝 Overview
+
+**Theme**: "Loop"
+**Engine**: Phaser JS
+**Target**: Desktop + Mobile (touch-friendly)
+**Jam Duration**: 4 Days
+**Focus**: Creativity and Enjoyment
+**Visual Style**: Mostly text-based UI with minimal graphics/icons
+
+---
+
+## 🎯 Core Concept
+
+The player is a freelancer stuck in an endless work loop:
+Find jobs → Compete → Work → Handle stress → Improve → Repeat
+Every day is a decision: work, rest, or grow — but burnout is always near.
+
+---
+
+## 🧠 Player Stats
+
+| Attribute    | Range | Description                           |
+| ------------ | ----- | ------------------------------------- |
+| Design Skill | 0–10  | Used when completing Design jobs      |
+| Dev Skill    | 0–10  | Used when completing Development jobs |
+| QA Skill     | 0–10  | Modifies final job quality output     |
+| Stress       | 0–10  | Increases with jobs or failures       |
+| Money        | ∞     | Earned from jobs; used for upgrades   |
+
+---
+
+## 🔁 Daily Loop Flow
+
+1. **Display 3 Random Job Cards**
+
+   * Each includes title, lorem description, required skill + level, and max pay
+   * Always at least one job that matches player skill
+
+2. **Job Application Mini-Game** (always triggers on job selection)
+
+   * 3 math questions (MCQs) with standard timer
+   * All correct → win the job
+   * Any wrong → fail the job (+3 stress, no income)
+
+3. **Skill Challenge Mini-Game** *(only if player’s skill < job requirement)*
+
+   * 5 fast-paced math questions
+   * All correct → complete the job successfully
+   * Any wrong → fail the job (+3 stress, no income)
+
+4. **Job Completion & Payout Calculation**
+
+### 💵 Payout Formula
+
+```js
+quality = (QA / 10) * (Main Skill / Job Requirement)
+quality = clamp(quality, 0, 1)
+final_pay = quality * max_pay * pc_bonus
+```
+
+### 🎁 Bonus Triggers
+
+| Bonus Type       | Trigger                           | Bonus Amount  |
+| ---------------- | --------------------------------- | ------------- |
+| Critical Success | quality === 1.0                   | +\$25         |
+| Client Tip       | quality === 1.0 and QA ≥ 9.0      | +\$50         |
+| Partial Payment  | quality < 0.4 (but job completed) | 50% of payout |
+| Failure          | Mini-game failed                  | No pay        |
+
+5. **Stress Update**
+
+   * +1 after successful job
+   * +3 after any job failure
+   * Max stress = 10 → Game Over
+   * 3 days without taking a job → random skill -0.1
+
+6. **Daily Action Limit**
+
+   * Only 1 action allowed per day:
+
+     * Accept a job
+     * Take a course
+     * Upgrade PC
+     * Perform stress relief
+
+---
+
+## 🏪 Shop Options
+
+| Option        | Effect                             | Blocks work for the day |
+| ------------- | ---------------------------------- | ----------------------- |
+| ☕ Coffee      | -3 stress                          | ✅                       |
+| 🌱 Plant      | -4 stress                          | ✅                       |
+| 🏋️ Gym       | -5 stress                          | ✅                       |
+| 📚 Course     | +0.1 to chosen skill               | ✅                       |
+| 🧠 PC Upgrade | +5–20% to final quality (stacking) | ✅                       |
+
+---
+
+## 🎮 Mini-Games
+
+### 📩 Mini-Game 1: Job Application
+
+* Always 3 math questions (addition, subtraction, etc.)
+* Standard timer
+* Must answer all correctly to win the job
+* Compete with 4 AI rivals (e.g. PixelGuru, BudgetBobby, KarenUX, Devzilla)
+
+### ⚒️ Mini-Game 2: Skill Challenge
+
+* Triggers only if player skill < required job skill
+* 5 harder math questions with shorter timer
+* Must get all correct to complete the job and earn payout
+* Success: chance of +0.1 to skill used
+
+---
+
+## 📋 Job Cards
+
+| Field          | Notes                                               |
+| -------------- | --------------------------------------------------- |
+| Job Title      | Realistic freelance roles (e.g. “Landing Page Fix”) |
+| Description    | Random lorem ipsum text                             |
+| Required Skill | Type (Design/Dev) + Float value (0.5–5.0)           |
+| Max Payout     | Scaled based on required skill (e.g. \$100–\$400)   |
+
+---
+
+## 💾 Save & Resume Logic
+
+* Local storage used to save:
+
+  * Player stats (skills, money, stress)
+  * Day count
+* First-time players get an intro narrative + creative start button
+* Returning players get "Resume Game" or "Start Over" options
+
+---
+
+## 🧩 Art & UI Plan
+
+* **Mostly CSS + Phaser UI** (text-based menus, cards, bars)
+* Kenney icon packs for:
+
+  * Skills, stress relief, upgrades, money
+* Optional small heads/avatars for rival freelancers
+* Progress bars for:
+
+  * QA, Dev, Design
+  * Stress meter
+* Light visual effects:
+
+  * Ticks, sparkles, glow on perfect delivery or skill-up
+
+---
+
+## ⚰️ Game Over
+
+* Triggered when stress reaches 10
+* Optional “burnout” screen with retry button
+* Player can restart the loop with reset stats
+
+---
+
+## ✅ Key Creative Touches
+
+* Humor in job rival names & fake project descriptions
+* Satisfying and fast math-based gameplay
+* Balancing work, upgrades, and self-care
+* Perfect metaphor for the freelance grind loop

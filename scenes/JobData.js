@@ -1,0 +1,22 @@
+export const allJobs = [
+  { title: 'Fix Node.js API Bug', skill: 'dev' },
+  { title: 'Build Login System in React', skill: 'dev' },
+  { title: 'Create CRUD Backend with Express', skill: 'dev' },
+  { title: 'Stripe Payment Integration', skill: 'dev' },
+  { title: 'Optimize SQL Queries', skill: 'dev' },
+  { title: 'Firebase Auth Setup', skill: 'dev' },
+  { title: 'Convert jQuery to Vanilla JS', skill: 'dev' },
+  { title: 'Integrate Third-Party API', skill: 'dev' },
+  { title: 'Build Chat Feature with Socket.io', skill: 'dev' },
+  { title: 'Refactor Legacy Codebase', skill: 'dev' },
+  { title: 'Mobile App UI Redesign', skill: 'design' },
+  { title: 'Landing Page Design', skill: 'design' },
+  { title: 'Create Website Style Guide', skill: 'design' },
+  { title: 'Figma to HTML Design Prep', skill: 'design' },
+  { title: 'Design Product Onboarding Screens', skill: 'design' },
+  { title: 'Dark Mode UI Mockups', skill: 'design' },
+  { title: 'UX Audit for E-Commerce Site', skill: 'design' },
+  { title: 'Wireframe Dashboard UI', skill: 'design' },
+  { title: 'Redesign Portfolio Website', skill: 'design' },
+  { title: 'Branding Assets for SaaS App', skill: 'design' }
+];
